@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="main.css">
+  <script src="bundle.js" async></script>
+</head>
+<body>
+  <div data-controller="hello">
+    <input data-hello-target="name" type="text">
+    <button data-action="click->hello#greet">Greet</button>
+  </div>
+  <h1 data-controller="example"></h1>
+
+  <div data-controller="clipboard" data-clipboard-supported-class="clipboard--supported">
+    PIN: <input type="text" value="1234" readonly data-clipboard-target="source">
+    <button data-action="clipboard#copy" class="clipboard-button">Copy to Clipboard</button>
+  </div>
+
+  <div data-controller="clipboard" data-clipboard-supported-class="clipboard--supported">
+    PIN: <input data-clipboard-target="source" type="text" value="3737" readonly>
+    <button data-action="clipboard#copy" class="clipboard-button">Copy to Clipboard</button>
+  </div>
+
+  <div data-controller="clipboard" data-clipboard-supported-class="clipboard--supported">
+    PIN: <input data-clipboard-target="source" type="text" value="3434" readonly>
+    <a href="#" data-action="clipboard#copy" class="clipboard-button">Copy to Clipboard</a>
+  </div>
+
+
+  <div data-controller="slideshow">
+    <button data-action="slideshow#previous"> ← </button>
+    <button data-action="slideshow#next"> → </button>
+
+    <div data-slideshow-target="slide">🐵</div>
+    <div data-slideshow-target="slide">🙈</div>
+    <div data-slideshow-target="slide">🙉</div>
+    <div data-slideshow-target="slide">🙊</div>
+  </div>
+
+  <div data-controller="slideshow" data-slideshow-index-value="1">
+    <button data-action="slideshow#previous"> ← </button>
+    <button data-action="slideshow#next"> → </button>
+
+    <div data-slideshow-target="slide">A</div>
+    <div data-slideshow-target="slide">B</div>
+    <div data-slideshow-target="slide">C</div>
+    <div data-slideshow-target="slide">D</div>
+  </div>
+
+  <div data-controller="content-loader"
+       data-content-loader-url-value="/messages.html"
+       data-content-loader-refresh-interval-value="5000"
+  ></div>
+</body>
+</html>
