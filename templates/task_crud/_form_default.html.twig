@@ -1,0 +1,7 @@
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    <a href="{{ path('app_task_crud_index') }}" class="ms-2">back to list</a>
+{{ form_end(form) }}

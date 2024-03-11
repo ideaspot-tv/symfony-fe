@@ -1,0 +1,23 @@
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-12 col-md-6">
+            {{ form_label(form.summary) }}
+            {{ form_widget(form.summary) }}
+            {{ form_errors(form.summary) }}
+        </div>
+        <div class="col-12 col-md-6">
+            {{ form_label(form.deadline) }}
+            {{ form_widget(form.deadline) }}
+            {{ form_errors(form.deadline) }}
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-6 offset-md-6">
+            {{ form_widget(form.isComplete) }}
+        </div>
+    </div>
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    <a href="{{ path('app_task_crud_index') }}" class="ms-2">back to list</a>
+{{ form_end(form) }}

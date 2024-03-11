@@ -1,39 +1,48 @@
-{% extends 'base.html.twig' %}
+{% extends 'crud_layout.html.twig' %}
 
 {% block title %}Task index{% endblock %}
 
-{% block body %}
-    <h1>Task index</h1>
+{% block content %}
+    <h1>
+        To-Do List
+        <a
+            href="{{ path('app_task_crud_new') }}"
+            class="fs-3"
+            data-bs-toggle="tooltip"
+            title="Create new task"
+        ><i class="bi bi-plus-circle"></i></a>
+    </h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Summary</th>
-                <th>Deadline</th>
-                <th>IsComplete</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for task in tasks %}
-            <tr>
-                <td>{{ task.id }}</td>
-                <td>{{ task.summary }}</td>
-                <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
-                <td>{{ task.isComplete ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_task_crud_show', {'id': task.id}) }}">show</a>
-                    <a href="{{ path('app_task_crud_edit', {'id': task.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Summary</th>
+                    <th>Deadline</th>
+                    <th>IsComplete</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.summary }}</td>
+                    <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
+                    <td>{{ task.isComplete ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('app_task_crud_show', {'id': task.id}) }}">show</a>
+                        <a href="{{ path('app_task_crud_edit', {'id': task.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{{ path('app_task_crud_new') }}">Create new</a>
 {% endblock %}

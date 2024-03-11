@@ -1,11 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'crud_layout.html.twig' %}
 
 {% block title %}New Task{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Create new Task</h1>
 
-    {{ include('task_crud/_form.html.twig') }}
+    {{ include('task_crud/_form_default.html.twig') }}
 
-    <a href="{{ path('app_task_crud_index') }}">back to list</a>
 {% endblock %}
