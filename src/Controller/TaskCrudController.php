@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/')]
+#[Route('/task')]
 class TaskCrudController extends AbstractController
 {
     #[Route('/', name: 'app_task_crud_index', methods: ['GET'])]
@@ -42,7 +42,7 @@ class TaskCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_task_crud_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_task_crud_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(Task $task): Response
     {
         return $this->render('task_crud/show.html.twig', [
@@ -68,7 +68,7 @@ class TaskCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_task_crud_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_task_crud_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function delete(Request $request, Task $task, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$task->getId(), $request->request->get('_token'))) {
