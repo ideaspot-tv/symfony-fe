@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tasks{% endblock %}
+
+{% block body %}
+    <header>
+        <h1>To do list</h1>
+    </header>
+
+    <section id="flash-messages">
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ type }}">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+
+    <main>
+        {% block navigation %}
+            <nav id="tasks-navigation">
+                <a href="{{ path('app_task_new', {query: query is defined ? query : null}) }}">New</a>
+                <form method="GET">
+                    <input type="text" name="query" placeholder="Search..." value="{{ query is defined ? query : null }}">
+                    <button type="submit">Search</button>
+                </form>
+            </nav>
+        {% endblock %}
+
+        {% block taskForm %}{% endblock %}
+
+        {% block tasks %}
+            {% if incomplete and incomplete|length %}
+                <section id="tasks-incomplete">
+                    <ul>
+                        {% for task in incomplete %}
+                            <li>
+                                <a href="{{ path('app_task_complete', {id: task.id, isComplete: true, query: query is defined ? query : null}) }}">[...]</a>
+                                {{ task.summary }}
+                                {% if task.deadline %}
+                                    <span>{{ task.deadline|date('Y-m-d') }}</span>
+                                {% endif %}
+                                <a href="{{ path('app_task_edit', {id: task.id, query: query is defined ? query : null}) }}">Edit</a>
+                                <a href="{{ path('app_task_delete', {id: task.id, query: query is defined ? query : null}) }}">Delete</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            {% endif %}
+
+            {% if complete and complete|length %}
+                <section id="tasks-complete">
+                    <a href="{{ path('app_task_deletecompleted', {query: query is defined ? query : null}) }}">Delete completed</a>
+                    <ul>
+                        <h2>Completed tasks</h2>
+                        {% for task in complete %}
+                            <li>
+                                <a href="{{ path('app_task_complete', {id: task.id, isComplete: 0, query: query is defined ? query : null}) }}">[v]</a>
+                                {{ task.summary }}
+                                {% if task.deadline %}
+                                    <span>{{ task.deadline|date('Y-m-d') }}</span>
+                                {% endif %}
+                                <a href="{{ path('app_task_edit', {id: task.id, query: query is defined ? query : null}) }}">Edit</a>
+                                <a href="{{ path('app_task_delete', {id: task.id, query: query is defined ? query : null}) }}">Delete</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            {% endif %}
+        {% endblock %}
+    </main>
+
+    <footer>&copy; ideaspot.tv</footer>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'task/layout.html.twig' %}
+
+{% block title %}Tasks{% endblock %}
+
+{% block navigation %}
+    <a href="{{ path('app_task_index') }}">Back</a>
+    <form method="GET">
+        <input type="text" name="query" placeholder="Search..." value="{{ query is defined ? query : null }}">
+        <button type="submit">Search</button>
+    </form>
+{% endblock %}
+
+{% block taskForm %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit">Update</button>
+        <a href="{{ path('app_task_index', {query: query is defined ? query : null}) }}">Cancel</a>
+    {{ form_end(form) }}
+{% endblock %}
