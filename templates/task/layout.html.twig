@@ -3,70 +3,89 @@
 {% block title %}Tasks{% endblock %}
 
 {% block body %}
-    <header>
-        <h1>To do list</h1>
-    </header>
+    <div class="container">
+        <header>
+            <h1>To do list</h1>
+        </header>
 
-    <section id="flash-messages">
-        {% for type, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="flash-{{ type }}">{{ message }}</div>
+        <section id="flash-messages">
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ type }}">{{ message }}</div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+        </section>
 
-    <main>
-        {% block navigation %}
-            <nav id="tasks-navigation">
-                <a href="{{ path('app_task_new', {query: query is defined ? query : null}) }}">New</a>
-                <form method="GET">
-                    <input type="text" name="query" placeholder="Search..." value="{{ query is defined ? query : null }}">
-                    <button type="submit">Search</button>
-                </form>
-            </nav>
-        {% endblock %}
+        <main>
+            {% block navigation %}
+                <nav id="tasks-navigation">
+                    <a href="{{ path('app_task_new', {query: query is defined ? query : null}) }}">New</a>
+                    <form method="GET">
+                        <input type="text" name="query" placeholder="Search..." value="{{ query is defined ? query : null }}">
+                        <button type="submit">Search</button>
+                    </form>
+                </nav>
+            {% endblock %}
 
-        {% block taskForm %}{% endblock %}
+            {% block taskForm %}{% endblock %}
 
-        {% block tasks %}
-            {% if incomplete and incomplete|length %}
-                <section id="tasks-incomplete">
-                    <ul>
-                        {% for task in incomplete %}
-                            <li>
-                                <a href="{{ path('app_task_complete', {id: task.id, isComplete: true, query: query is defined ? query : null}) }}">[...]</a>
-                                {{ task.summary }}
-                                {% if task.deadline %}
-                                    <span>{{ task.deadline|date('Y-m-d') }}</span>
-                                {% endif %}
-                                <a href="{{ path('app_task_edit', {id: task.id, query: query is defined ? query : null}) }}">Edit</a>
-                                <a href="{{ path('app_task_delete', {id: task.id, query: query is defined ? query : null}) }}">Delete</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </section>
-            {% endif %}
+            {% block tasks %}
+                {% if incomplete and incomplete|length %}
+                    <section id="tasks-incomplete" class="tasks-list">
+                        <ul>
+                            {% for task in incomplete %}
+                                <li>
+                                    <a href="{{ path('app_task_complete', {id: task.id, isComplete: true, query: query is defined ? query : null}) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                        </svg>
+                                    </a>
+                                    <span class="summary">
+                                        {{ task.summary }}
+                                        {% if task.deadline %}
+                                            <span class="deadline">{{ task.deadline|date('Y-m-d') }}</span>
+                                        {% endif %}
+                                    </span>
 
-            {% if complete and complete|length %}
-                <section id="tasks-complete">
-                    <a href="{{ path('app_task_deletecompleted', {query: query is defined ? query : null}) }}">Delete completed</a>
-                    <ul>
+                                    <a href="{{ path('app_task_edit', {id: task.id, query: query is defined ? query : null}) }}">Edit</a>
+                                    <a href="{{ path('app_task_delete', {id: task.id, query: query is defined ? query : null}) }}">Delete</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                {% endif %}
+
+                {% if complete and complete|length %}
+                    <section id="tasks-complete" class="tasks-list">
                         <h2>Completed tasks</h2>
-                        {% for task in complete %}
-                            <li>
-                                <a href="{{ path('app_task_complete', {id: task.id, isComplete: 0, query: query is defined ? query : null}) }}">[v]</a>
-                                {{ task.summary }}
-                                {% if task.deadline %}
-                                    <span>{{ task.deadline|date('Y-m-d') }}</span>
-                                {% endif %}
-                                <a href="{{ path('app_task_edit', {id: task.id, query: query is defined ? query : null}) }}">Edit</a>
-                                <a href="{{ path('app_task_delete', {id: task.id, query: query is defined ? query : null}) }}">Delete</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </section>
-            {% endif %}
-        {% endblock %}
-    </main>
+                        <a href="{{ path('app_task_deletecompleted', {query: query is defined ? query : null}) }}">Delete completed</a>
+                        <ul>
+                            {% for task in complete %}
+                                <li>
+                                    <a href="{{ path('app_task_complete', {id: task.id, isComplete: 0, query: query is defined ? query : null}) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-check" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                            <path d="M9 12l2 2l4 -4" />
+                                        </svg>
+                                    </a>
+                                    <span class="summary">
+                                        {{ task.summary }}
+                                        {% if task.deadline %}
+                                            <span class="deadline">{{ task.deadline|date('Y-m-d') }}</span>
+                                        {% endif %}
+                                    </span>
+                                    <a href="{{ path('app_task_edit', {id: task.id, query: query is defined ? query : null}) }}">Edit</a>
+                                    <a href="{{ path('app_task_delete', {id: task.id, query: query is defined ? query : null}) }}">Delete</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                {% endif %}
+            {% endblock %}
+        </main>
 
-    <footer>&copy; ideaspot.tv</footer>
+        <footer>&copy; ideaspot.tv</footer>
+    </div>
 {% endblock %}
